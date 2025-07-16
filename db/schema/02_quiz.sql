@@ -7,5 +7,5 @@ CREATE TABLE quiz (
   creator_id INTEGER NOT NULL REFERENCES user(id),
   visibility BOOLEAN NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  sharable_url TEXT
+  sharable_url TEXT UNIQUE
 );
