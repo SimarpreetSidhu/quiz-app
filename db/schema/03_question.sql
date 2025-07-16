@@ -1,0 +1,9 @@
+
+DROP TABLE IF EXISTS question CASCADE;
+CREATE TABLE question (
+  id SERIAL PRIMARY KEY NOT NULL,
+  quiz_id INTEGER NOT NULL REFERENCES quiz(id) ON DELETE CASCADE,
+  content TEXT NOT NULL,
+  position INTEGER NOT NULL,
+  correct_answer BOOLEAN NOT NULL
+);
