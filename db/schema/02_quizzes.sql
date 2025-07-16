@@ -1,6 +1,6 @@
 
 DROP TABLE IF EXISTS quiz CASCADE;
-CREATE TABLE quiz (
+CREATE TABLE quizzes (
   id SERIAL PRIMARY KEY NOT NULL,
   quiz_title TEXT NOT NULL,
   quiz_description TEXT,
