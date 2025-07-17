@@ -14,10 +14,11 @@ router.get('/', (req, res) => {
 });
 
 //route to attempt a quiz
-//res.params.id = named route parameters
+//res.params.id => request URL paramaters of specific ID = named route parameters 
 //render quiz.ejs and pass questions with the specific quizId.
 router.get('/:id/attempt', (req, res) => {
   const quizId = req.params.id;
+ //show all the questions that is specific to the quiz user clicked.
   getQuestionsByQuizId(quizId)
     .then(questions => {
       res.render('quiz', { questions, quizId });
