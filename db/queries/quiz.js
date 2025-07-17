@@ -1,4 +1,4 @@
-const db = require('./connection');
+const db = require('../connection');
 
 const getPublicQuizzes = () => {
   return db.query('SELECT * FROM quizzes WHERE visibility = true;')
