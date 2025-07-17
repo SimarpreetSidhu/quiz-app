@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
+  <title>Quiz App Homepage</title>
 
   <meta charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
@@ -18,7 +18,16 @@
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
+  <h1>Welcome to the Quiz App!</h1>
+  <h1>Public Quizzes</h1>
+  <ul>
+    <% quizzes.forEach(quiz => { %>
+      <li>
+        <a href="/quizzes/<%= quiz.id %>/attempt"><%= quiz.quiz_title %></a>
+        <p><%= quiz.quiz_description %></p>
+      </li>
+    <% }) %>
+  </ul>
 </body>
 
 </html>
