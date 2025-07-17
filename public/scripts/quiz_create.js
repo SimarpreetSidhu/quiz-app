@@ -1,6 +1,3 @@
-const numberOfQuestions = () => {
-  console.log($('.question-container').children().length());
-};
 let num = 0;
 $('.question-container').on('click', '.add', function(e) {
   e.preventDefault();
@@ -20,3 +17,12 @@ $('.question-container').on('click', '.remove', function() {
   console.log("this");
   $(this).parent().remove();
 });
+
+$('.question-container').on('click','.save', function(e){
+  e.preventDefault();
+  var quizName =$('#quiz-name').val();
+  $('.quiz-name').text(quizName);
+  var descriptionText =$('.description-text').val();
+  console.log(descriptionText);
+  $('.description-text').text(descriptionText);
+})
