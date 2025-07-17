@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
 
 //route to attempt a quiz
 //res.params.id = named route parameters
+//render quiz.ejs and pass questions with the specific quizId.
 router.get('/:id/attempt', (req, res) => {
   const quizId = req.params.id;
   getQuestionsByQuizId(quizId)
