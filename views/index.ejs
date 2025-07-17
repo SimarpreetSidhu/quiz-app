@@ -18,11 +18,17 @@
 </head>
 
 <body>
-  <h1>Welcome to the Quiz App</h1>
+  <h1>Welcome to the Quiz App!</h1>
   <h1>Public Quizzes</h1>
   <ul>
     <% quizzes.forEach(quiz => { %>
-      <li><a href="/quiz/<%= quiz.id %>"><%= quiz.quiz_title %></a></li>
+      <li>
+        <a href="/quizzes/<%= quiz.id %>">
+          <h3><%= quiz.quiz_title %></h3>
+        </a>
+        <p><%= quiz.quiz_description %></p>
+        <small>Created by: <%= quiz.creator_id %></small>
+      </li>
     <% }); %>
   </ul>
 </body>
