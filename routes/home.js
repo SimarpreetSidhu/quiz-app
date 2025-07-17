@@ -3,10 +3,10 @@ const router = express.Router();
 
 const { getPublicQuizzes } = require('../db/queries/quiz');
 
-router.get('/home', (req, res) => {
+router.get('/', (req, res) => {
   getPublicQuizzes()
     .then(quizzes => {
-      res.render('home', { quizzes });
+      res.render('index', { quizzes });
     })
     .catch(err => {
       res.status(500).send(err.message);
