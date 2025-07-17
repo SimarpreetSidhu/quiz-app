@@ -1,4 +1,4 @@
-const { getPublicQuizzes } = require('../db/queries/quizzes');
+const { getPublicQuizzes } = require('../db/queries/quiz');
 
 router.get('/', (req, res) => {
   getPublicQuizzes()
