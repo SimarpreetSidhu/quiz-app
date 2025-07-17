@@ -24,6 +24,7 @@
     <% quizzes.forEach(quiz => { %>
       <li>
         <a href="/quizzes/<%= quiz.id %>/attempt"><%= quiz.quiz_title %></a>
+        <p><%= quiz.quiz_description %></p>
       </li>
     <% }) %>
   </ul>
