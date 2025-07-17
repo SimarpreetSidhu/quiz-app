@@ -31,7 +31,7 @@ const homeRoutes = require('./routes/home');
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
-app.use('/quiz', quizRoutes);
+app.use('/quizzes', quizRoutes);
 app.use('/', homeRoutes);
 // Note: mount other resources here, using the same pattern above
 
