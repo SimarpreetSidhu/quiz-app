@@ -18,8 +18,12 @@
 </head>
 
 <body>
-  <h1>Quiz</h1>
-  
+  <h1>Questions</h1>
+  <ul>
+    <% questions.forEach(question => { %>
+      <li><%= question.content %></li>
+    <% }) %>
+  </ul>
 </body>
 
 </html>

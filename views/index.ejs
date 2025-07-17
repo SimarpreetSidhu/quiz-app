@@ -23,12 +23,9 @@
   <ul>
     <% quizzes.forEach(quiz => { %>
       <li>
-        <a href="/quizzes/<%= quiz.id %>">
-          <h3><%= quiz.quiz_title %></h3>
-        </a>
-        <p><%= quiz.quiz_description %></p>
+        <a href="/quizzes/<%= quiz.id %>/attempt"><%= quiz.quiz_title %></a>
       </li>
-    <% }); %>
+    <% }) %>
   </ul>
 </body>
 
