@@ -18,24 +18,10 @@
 </head>
 
 <body>
-  <h1>Questions</h1>
-  <form action='/quiz/<%= quiz.id %>/submit' method='POST'>
-  <ul>
-    <% questions.forEach(question => { %>
-      <li>
-        <%= question.content %><br>
-    <label>
-      <input type='radio' name='answer_<%= question.id %>' value='true' required> True
-    </label>
-    <label>
-      <input type='radio' name='answer_<%= question.id %>' value='false'> False
-    </label>
-  </li>
-  <% }); %>
-  </ul>
-  <input type='submit' value='Submit Quiz'>
-  </form>
+  <h1><%= quiz.quiz_title %></h1>
+  <p><%= quiz.quiz_description %></p>
 
+  
 </body>
 
 </html>
