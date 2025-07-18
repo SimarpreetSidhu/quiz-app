@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Quiz</title>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/questionSheet.css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/quiz_create.js"></script>
+
+</head>
+
+<body>
+  <div class="header">
+    <div class="title">
+      <h1 class="quiz-name">New Quiz</h1>
+      <!--<button class="edit">Edit name</button>-->
+    </div>
+
+  </div>
+  <form class="question-create">
+    <label for="quiz-name">Quiz Name</label>
+    <input type="text" name="quiz-name" id="quiz-name">
+    <div class="description">
+      <textarea class="description-text">description</textarea>
+    </div>
+    <div class="question-container">
+      <div class="question">
+        <textarea>Insert Question here</textarea>
+        <input type="radio" id="true" name="answer">
+        <label for="true">True</label>
+        <input type="radio" id="false" name="answer">
+        <label for="false">False</label>
+        <button class="remove"> Remove Question</button>
+      </div>
+      <div class="question">
+        <button class="add"> Add new question</button>
+      </div>
+
+      <button class="save">Save Quiz</button>
+  </form>
+  </div>
+
+</body>
+
+</html>
