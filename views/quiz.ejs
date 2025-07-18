@@ -1,29 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
-  <title>Quiz</title>
+  <title>Attempt Quiz</title>
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta charset='UTF-8' >
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' >
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' >
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel='stylesheet' href='/vendor/normalize-4.1.1.css' />
+  <link rel='stylesheet' href='/vendor/border-box.css' />
+  <link rel='stylesheet' href='/styles/main.css' />
+  <link rel='stylesheet' href='/styles/layout.css' />
 
-  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script src='/vendor/jquery-3.0.0.js'></script>
  
 </head>
 
 <body>
   <h1>Questions</h1>
+  <form action='/quiz/<%= quiz.id %>/submit' method='POST'>
   <ul>
     <% questions.forEach(question => { %>
-      <li><%= question.content %></li>
-    <% }) %>
+      <li>
+        <%= question.content %><br>
+    <label>
+      <input type='radio' name='answer_<%= question.id %>' value='true' required> True
+    </label>
+    <label>
+      <input type='radio' name='answer_<%= question.id %>' value='false'> False
+    </label>
+  </li>
+  <% }); %>
   </ul>
+  <input type='submit' value='Submit Quiz'>
+  </form>
+
 </body>
 
 </html>
