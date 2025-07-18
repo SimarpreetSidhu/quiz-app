@@ -28,6 +28,7 @@ const getQuestionsByQuizId = (quizId) => {
     });
 };
 
+//get title of the quiz and description
 const getQuizById = (quizId) => {
   return db.query(`
     SELECT id, quiz_title, quiz_description

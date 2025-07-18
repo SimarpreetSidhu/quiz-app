@@ -18,9 +18,9 @@ router.get('/', (req, res) => {
 //render quiz.ejs and pass questions with the specific quizId.
 router.get('/:id/attempt', (req, res) => {
   const quizId = req.params.id;
- //show quiz info & the questions that is specific to the quiz user clicked.
+ //show quiz info & the questions
   Promise.all([getQuizById(quizId), getQuestionsByQuizId(quizId)])
-    .then(questions => {
+    .then(([quiz, questions]) => {
       res.render('quiz', { questions, quiz, quizId });
     })
     .catch(err => {
