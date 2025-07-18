@@ -14,7 +14,7 @@ const getPublicQuizzes = () => {
     });
 };
 
-////get all the questions by for a spevific quiz (with quizId)
+//get all the questions by for a spevific quiz (with quizId)
 const getQuestionsByQuizId = (quizId) => {
   const query = `
     SELECT id, content
