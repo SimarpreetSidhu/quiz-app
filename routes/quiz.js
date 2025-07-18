@@ -1,6 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-const { getQuestionsByQuizId, getPublicQuizzes, getQuizById } = require('../db/queries/quiz');
+const { getQuestionsByQuizId, getPublicQuizzes, getQuizById} = require('../db/queries/quiz');
 
 //route to display all of public quizzes on homepage.
 router.get('/', (req, res) => {
