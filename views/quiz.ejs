@@ -18,9 +18,13 @@
 </head>
 
 <body>
-  <h1>Questions</h1>
-
-
+  <h1><%= quiz.quiz_title %></h1>
+  <p><%= quiz.quiz_description %></p>
+  
+  <a href="/quiz/<%= quizId %>/attempt">
+    <button>Attempt Quiz</button>
+  </a>
+  
 </body>
 
 </html>

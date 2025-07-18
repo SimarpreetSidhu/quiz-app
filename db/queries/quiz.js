@@ -28,4 +28,17 @@ const getQuestionsByQuizId = (quizId) => {
     });
 };
 
-module.exports = { getPublicQuizzes, getQuestionsByQuizId };
+const getQuizById = (quizId) => {
+  return db.query(`
+    SELECT id, quiz_title, quiz_description
+    FROM quizzes
+    WHERE id = $1;
+  `, [quizId])
+  .then(result => result.rows[0])
+  .catch(err => {
+    console.error('Query Failed!: ', err.message);
+  });
+};
+
+
+module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById };
