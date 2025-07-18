@@ -1,3 +1,7 @@
+// create function to go through question container to save the questions and the answers
+// put the question into an object? 
+
+
 let num = 0;
 $('.question-container').on('click', '.add', function(e) {
   e.preventDefault();
