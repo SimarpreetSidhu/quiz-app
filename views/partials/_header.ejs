@@ -1,0 +1,23 @@
+<header>
+  <nav class="navbar">
+    <div class="navbar-nav-left">
+      <a href="/urls">My quiz</a>
+      <a href="/quizzes/new">Create New Quiz</a>
+    </div>
+    <div class="navbar-nav-right">
+    <% if (user) { %>
+              <!-- Logged in: Show logout and email -->
+        <form class="form-inline ml-auto" action="/logout" method="POST">
+          <label class="text-white mr-2">Logged in as: <%= user.email%></label>
+          <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+      <% } else { %>
+           <!-- Not logged in: Show login link -->
+        
+        <a href="/login">Login</a>
+        </div>
+    
+       <% } %>
+
+  </nav>
+</header>
