@@ -42,16 +42,16 @@ const getQuizById = (quizId) => {
 };
 
 //save the attempt
-const saveAttempt = (userId, quizId, score) => {
-  const query = `
-    INSERT INTO attempts (user_id, quiz_id, score)
-    VALUES ($1, $2, $3)
-    RETURNING id;
-  `;
-  return db.query(query, [userId, quizId, score])
-    .then(res => res.rows[0].id);
+const saveAttempt = (user_id, quiz_id, score) => {
+  return db
+    .query(
+      `INSERT INTO attempts (user_id, quiz_id, score)
+      VALUES ($1, $2, $3)
+      RETURNING id;`,
+      [user_id, quiz_id, score]
+    )
+    .then((result) => result.rows[0].id);
 };
-
 //save the answers
 const saveAnswer = (attemptId, questionId, selectedAnswer) => {
   const query = `

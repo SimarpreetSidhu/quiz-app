@@ -5,10 +5,14 @@
   <ul>
     <% questions.forEach(q => { %>
       <li>
-        <strong>Q:</strong> <%= q.question %><br>
+        <strong>Q:</strong> <%= q.content %><br>
+        <strong>Your Answer:</strong> <%= userAnswers[`question-${q.id}`] %> <br>
         <strong>Correct Answer:</strong> <%= q.correct_answer %><br>
-        <strong>Explanation:</strong> <%= q.explanation || 'No explanation.' %>
       </li>
+      <hr>
     <% }) %>
   </ul>
 <% } %>
+
+<button onclick="window.location.href='/'">Go Home</button>
+<button onclick="window.location.href='/quizzes/<%= quizId %>/attempt'">Try Again</button>
