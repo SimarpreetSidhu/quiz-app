@@ -17,7 +17,7 @@ const getPublicQuizzes = () => {
 //get all the questions by for a spevific quiz (with quizId)
 const getQuestionsByQuizId = (quizId) => {
   const query = `
-    SELECT id, content
+    SELECT id, content, correct_answer
     FROM questions
     WHERE quiz_id = $1;
   `;
@@ -41,5 +41,26 @@ const getQuizById = (quizId) => {
   });
 };
 
+//save the attempt
+const saveAttempt = (user_id, quiz_id, score) => {
+  return db
+    .query(
+      `INSERT INTO attempts (user_id, quiz_id, score)
+      VALUES ($1, $2, $3)
+      RETURNING id;`,
+      [user_id, quiz_id, score]
+    )
+    .then((result) => result.rows[0].id);
+};
+//save the answers
+const saveAnswer = (attemptId, questionId, selectedAnswer) => {
+  const query = `
+    INSERT INTO answers (attempt_id, question_id, selected_answer)
+    VALUES ($1, $2, $3);
+  `;
+  return db.query(query, [attemptId, questionId, selectedAnswer]);
+};
 
-module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById };
+
+
+module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt };
