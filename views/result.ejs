@@ -1,0 +1,14 @@
+<h1>Quiz Results</h1>
+<p>Your Score: <%= score %> out of <%= total %></p>
+
+<% if (questions) { %>
+  <ul>
+    <% questions.forEach(q => { %>
+      <li>
+        <strong>Q:</strong> <%= q.question %><br>
+        <strong>Correct Answer:</strong> <%= q.correct_answer %><br>
+        <strong>Explanation:</strong> <%= q.explanation || 'No explanation.' %>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>

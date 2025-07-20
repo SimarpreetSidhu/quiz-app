@@ -4,6 +4,8 @@ const {
   getQuestionsByQuizId,
   getPublicQuizzes,
   getQuizById,
+  saveAnswer,
+  saveAttempt
 } = require('../db/queries/quiz');
 
 //route to display all of public quizzes on homepage.
@@ -33,35 +35,41 @@ router.get('/:id/attempt', (req, res) => {
 });
 
 //POST route to submit answers
-router.post('/quiz/:id/submit', (req, res) => {
-  const userAnswers = req.body; // the answers that user selected
+router.post('/:id/submit', async (req, res) => {
   const quizId = req.params.id;
+  const userAnswers = req.body;
+  const userId = req.session.user_id;
   let score = 0;
-  //retrieve correct answers for quiz from DB
-  getQuestionsByQuizId(quizId)
-  .then(questions => {
-    questions.forEach(question => {
+
+  try {
+    const questions = await getQuestionsByQuizId(quizId);
+
+    // Caliculate the score
+    for (const question of questions) {
       const userAnswer = userAnswers[`question-${question.id}`];
-      //count correct answers and score
       if (userAnswer === String(question.correct_answer)) {
         score++;
       }
-    });
+    }
 
-    // Render the result of score page after checking all answers
+    // Save attempt and answers
+    const attemptId = await saveAttempt(userId, quizId, score);
+    for (const question of questions) {
+      const selected = userAnswers[`question-${question.id}`];
+      await saveAnswer(attemptId, question.id, selected);
+    }
+
     res.render('result', {
       score,
-      total: questions.length
+      total: questions.length,
+      questions,
+      userAnswers
     });
-  })
-  .catch(err => {
-    console.error("Error submitting quiz:", err);
-    res.status(500).send("Something went wrong!");
-  });
-});
 
-router.get('/new', (req, res) => {
-  res.render('quiz_new');
+  } catch (err) {
+    console.error('Error submitting quiz:', err);
+    res.status(500).send('Something went wrong.');
+  }
 });
 
 
