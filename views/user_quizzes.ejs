@@ -16,8 +16,9 @@
           </p>
           <span><%= quiz.visibility ? 'Public' : 'Private' %></span>
           <br>
+          <p>Share this quiz/question URL:</p>
+          <input type="text" value="<%= `http://localhost:8080/quizzes/${quiz.id}/attempt` %>">
 
-          
         </li>
         <hr>
       <% }); %>
