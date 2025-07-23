@@ -5,7 +5,10 @@ const {
   getPublicQuizzes,
   getQuizById,
   saveAnswer,
-  saveAttempt
+  saveAttempt,
+  insertQuizName,
+  insertQuestions,
+  updateShareableUrl
 } = require('../db/queries/quiz');
 
 //route to display all of public quizzes on homepage.
@@ -90,8 +93,40 @@ router.post('/:id/submit', async (req, res) => {
     });
 });
 
-router.get('/new',(req,res) => {
-  res.render('quiz_new')
+router.get('/new', (req, res) => {
+  res.render('quiz_new');
+});
+
+router.post('/new', (req, res) => {
+  const numQuestions = ((Object.keys(req.body).length) - 2) / 3;
+  let quiz_title = req.body.quiz_title;
+  let quiz_description = req.body.quiz_description;
+
+  insertQuizName(quiz_title, quiz_description, 1)
+    .then(result => {
+      const newQuizId = result.rows[0].id;
+      return updateShareableUrl(newQuizId)
+      .then(()=>{
+      return newQuizId;
+      });
+     
+    })
+    .then((newQuizId) => {
+      const queryPromises = [];
+      for (let i = 1; i <= numQuestions; i++) {
+        let quiz_question = req.body[`quiz_question${i}`];
+        let quiz_position = req.body[`question_position_${i}`];
+        let quiz_answer = req.body[`answer${i}`];
+
+        queryPromises.push(insertQuestions(newQuizId, quiz_question, quiz_position, quiz_answer));
+      }
+      return Promise.all(queryPromises);
+    });
+
+});
+
+router.get('/:id', (req, res) => {
+  res.render('quiz');
 });
 
 module.exports = router;
