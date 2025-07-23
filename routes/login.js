@@ -14,8 +14,8 @@ router.post(`/`, (req,res) => {
   getUserById(userId)
   .then(user => {
     if(user) {
-       req.session.user_id = user.id;
-       res.redirect('/quizzes');
+      req.session.user_id = user.id;
+      res.redirect('/quizzes');
     } else {
         // User not found: render login page with an error message
         res.status(401).render('login', { error: 'Invalid login', user: null });

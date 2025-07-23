@@ -1,4 +1,3 @@
-
 <body>
 
   <h1>My Created Quizzes</h1>
@@ -6,17 +5,19 @@
   <% if (quizzes.length === 0) { %>
     <p>You haven't created any quizzes yet.</p>
   <% } else { %>
-    <% quizzes.forEach(quiz => { %>
-      <li>
-        <a href="/quizzes/<%= quiz.id %>/attempt">
-          <%= quiz.quiz_title %>
-        </a>
-        <p>
-          <%= quiz.quiz_description %>
-        </p>
-      </li>
-    <% }); %>
-    
+    <ul>
+      <% quizzes.forEach(quiz => { %>
+        <li>
+          <a href="/quizzes/<%= quiz.id %>/attempt">
+            <%= quiz.quiz_title %>
+          </a>
+          <p>
+            <%= quiz.quiz_description %>
+          </p>
+          <span><%= quiz.visibility ? 'Public' : 'Private' %></span>
+        </li>
+        <hr>
+      <% }); %>
     </ul>
   <% } %>
 
