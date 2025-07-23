@@ -8,7 +8,8 @@ const {
   saveAttempt,
   insertQuizName,
   insertQuestions,
-  updateShareableUrl
+  updateShareableUrl,
+  updateVisibility
 } = require('../db/queries/quiz');
 
 //route to display all of public quizzes on homepage.
@@ -27,10 +28,11 @@ router.get('/', (req, res) => {
 //render quiz.ejs and pass questions with the specific quizId.
 router.get('/:id/attempt', (req, res) => {
   const quizId = req.params.id;
+  const shareUrl = `${req.protocol}://${req.get('host')}`;
   //show quiz info & the questions
   Promise.all([getQuizById(quizId), getQuestionsByQuizId(quizId)])
     .then(([quiz, questions]) => {
-      res.render('quiz', { questions, quiz, quizId });
+      res.render('quiz', { questions, quiz, quizId, shareUrl });
     })
     .catch((err) => {
       res.status(500).send('Error loading quiz questions: ' + err.message);
@@ -130,6 +132,18 @@ router.post('/new', (req, res) => {
 
 router.get('/:id', (req, res) => {
   res.render('quiz');
+});
+
+router.post('/:id/visibility', (req, res) => {
+  const quizId = req.params.id;
+  const visibility = req.body.visibility;
+//update/change the visibility in data 
+  updateVisibility(quizId, visibility)
+    .then(() => res.sendStatus(200))
+    .catch(err => {
+      console.error('Failed to change visibility:', err.message);
+      res.status(500).send('Error changing visibility');
+    });
 });
 
 module.exports = router;

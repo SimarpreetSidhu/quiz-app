@@ -12,7 +12,6 @@ router.get('/dashboard', (req, res) => {
   }
   getQuizzesByUserId(userId)
     .then(quizzes => {
-      console.log('Quizzes for user:', quizzes); // 👈 log this
       res.render('user_quizzes', { quizzes });
     })
     .catch(err => {
@@ -41,5 +40,7 @@ router.post('/login', (req, res) => {
       res.status(500).send('Server error');
     });
 });
+
+
 
 module.exports = router;
