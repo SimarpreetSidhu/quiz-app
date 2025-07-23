@@ -104,6 +104,12 @@ router.post('/new', (req, res) => {
   let quiz_description = req.body.quiz_description;
   console.log(req.session);
   let userID = req.session.user_id;
+
+  let visibility = true;
+  if (req.body.visibility === 'false') {
+    visibility = false;
+  }
+
   insertQuizName(quiz_title, quiz_description, userID)
     .then(result => {
       const newQuizId = result.rows[0].id;
