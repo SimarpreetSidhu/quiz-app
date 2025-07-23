@@ -14,9 +14,13 @@
           <p>
             <%= quiz.quiz_description %>
           </p>
-          <span><%= quiz.visibility ? 'Public' : 'Private' %></span>
-
+          <p>Visibility Status: <%= quiz.visibility ? 'Public' : 'Private' %></p>
           
+          <br>
+          <label><input type="radio" name="visibility" value="public" checked> Public</label>
+          
+          <label><input type="radio" name="visibility" value="private"> Private</label>
+
           <br>
           <p>Share this quiz/question URL:</p>
           <input type="text" value="<%= `http://localhost:8080/quizzes/${quiz.id}/attempt` %>">
