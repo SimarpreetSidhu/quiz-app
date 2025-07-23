@@ -30,11 +30,15 @@ router.get('/:id/attempt', (req, res) => {
   //show quiz info & the questions
   Promise.all([getQuizById(quizId), getQuestionsByQuizId(quizId)])
     .then(([quiz, questions]) => {
-      res.render('quiz', { questions, quiz, quizId });
+      res.render('quiz', { 
+        questions, 
+        quiz, 
+        quizId
     })
     .catch((err) => {
       res.status(500).send('Error loading quiz questions: ' + err.message);
     });
+  });
 });
 
 //POST route to submit answers
