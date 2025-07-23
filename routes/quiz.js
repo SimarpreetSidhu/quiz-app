@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
     });
 });
 
-//route to attempt a quiz
+//GET route to attempt a quiz
 //res.params.id => request URL paramaters of specific ID = named route parameters
 //render quiz.ejs and pass questions with the specific quizId.
 router.get('/:id/attempt', (req, res) => {
@@ -52,7 +52,8 @@ router.post('/:id/submit', async (req, res) => {
   let score = 0;
 
   getQuestionsByQuizId(quizId)
-    //when fetching the questions are done, loop through each question and check if each question matches the correct_answer. if it matches, then add 1point.
+    //when fetching the questions are done, loop through each question and check if each question matches the correct_answer. 
+    // if it matches, then add 1point.
     .then(questions => {
       // Calculate the score
       questions.forEach(question => {
