@@ -101,8 +101,9 @@ router.post('/new', (req, res) => {
   const numQuestions = ((Object.keys(req.body).length) - 2) / 3;
   let quiz_title = req.body.quiz_title;
   let quiz_description = req.body.quiz_description;
-
-  insertQuizName(quiz_title, quiz_description, 1)
+  console.log(req.session);
+  let userID = req.session.user_id;
+  insertQuizName(quiz_title, quiz_description, userID)
     .then(result => {
       const newQuizId = result.rows[0].id;
       return updateShareableUrl(newQuizId)
