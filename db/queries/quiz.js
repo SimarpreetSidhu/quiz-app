@@ -1,13 +1,13 @@
 //const { useId } = require('react');
 const db = require('../connection');
 
-const insertQuizName = (quizTitle, quizDescription, userId) => {
+const insertQuizName = (quizTitle, quizDescription, userId, visibility) => {
 
   return db.query(`
   INSERT INTO QUIZZES (quiz_title, quiz_description, creator_id , visibility, sharable_url)
-  VALUES ($1,$2,$3,true,'')
+  VALUES ($1,$2,$3,$4,'')
   RETURNING id;
-   `, [quizTitle, quizDescription, userId]);
+   `, [quizTitle, quizDescription, userId , visibility]);
 };
 
 const insertQuestions = (quizId, quizQuestion, questionPosition, quizAnswer) =>
