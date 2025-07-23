@@ -7,7 +7,7 @@ const insertQuizName = (quizTitle, quizDescription, userId) => {
   INSERT INTO QUIZZES (quiz_title, quiz_description, creator_id , visibility, sharable_url)
   VALUES ($1,$2,$3,true,'')
   RETURNING id;
-   `, [quizTitle, quizDescription, userId]);
+  `, [quizTitle, quizDescription, userId, visibility]);
 };
 
 const insertQuestions = (quizId, quizQuestion, questionPosition, quizAnswer) =>
@@ -86,6 +86,20 @@ const saveAnswer = (attemptId, questionId, selectedAnswer) => {
   return db.query(query, [attemptId, questionId, selectedAnswer]);
 };
 
+//
+const getQuizzesByUserId = (userId) => {
+  const query = `
+    SELECT * FROM quizzes
+    WHERE creator_id = $1
+    ORDER BY created_at DESC;
+  `;
+  return db.query(query, [userId])
+    .then(result => result.rows);
+};
 
 
-module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt, insertQuizName ,insertQuestions,updateShareableUrl };
+
+//true = listed as public quizzes, false = unlisted&private but others can attempt if they have the single quiz link.
+
+
+module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt, insertQuizName ,insertQuestions,updateShareableUrl, getQuizzesByUserId };

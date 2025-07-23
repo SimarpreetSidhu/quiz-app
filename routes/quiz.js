@@ -111,7 +111,7 @@ router.post('/new', (req, res) => {
       .then(()=>{
       return newQuizId;
       });
-     
+    
     })
     .then((newQuizId) => {
       const queryPromises = [];
