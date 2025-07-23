@@ -1,5 +1,30 @@
+//const { useId } = require('react');
 const db = require('../connection');
 
+const insertQuizName = (quizTitle, quizDescription, userId) => {
+
+  return db.query(`
+  INSERT INTO QUIZZES (quiz_title, quiz_description, creator_id , visibility, sharable_url)
+  VALUES ($1,$2,$3,true,'')
+  RETURNING id;
+   `, [quizTitle, quizDescription, userId]);
+};
+
+const insertQuestions = (quizId, quizQuestion, questionPosition, quizAnswer) =>
+{
+  return db.query(`
+    INSERT INTO questions (quiz_id, content, position, correct_answer)
+    VALUES ($1,$2,$3,$4)`, [quizId, quizQuestion, questionPosition, quizAnswer]);
+};
+
+const updateShareableUrl = (quizId) =>
+{
+  const shareableUrl = `/quiz/${quizId}`;
+  return db.query(`
+    UPDATE QUIZZES 
+    SET sharable_url=$1
+    WHERE id = $2`, [shareableUrl,quizId]);
+};
 
 //get all public questions
 const getPublicQuizzes = () => {
@@ -35,10 +60,10 @@ const getQuizById = (quizId) => {
     FROM quizzes
     WHERE id = $1;
   `, [quizId])
-  .then(result => result.rows[0])
-  .catch(err => {
-    console.error('Query Failed!: ', err.message);
-  });
+    .then(result => result.rows[0])
+    .catch(err => {
+      console.error('Query Failed!: ', err.message);
+    });
 };
 
 //save the attempt
@@ -63,4 +88,4 @@ const saveAnswer = (attemptId, questionId, selectedAnswer) => {
 
 
 
-module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt };
+module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt, insertQuizName ,insertQuestions,updateShareableUrl };
