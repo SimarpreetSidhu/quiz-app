@@ -68,15 +68,16 @@ const getQuizById = (quizId) => {
 
 //save the attempt
 const saveAttempt = (user_id, quiz_id, score) => {
-  return db
-    .query(
-      `INSERT INTO attempts (user_id, quiz_id, score)
-      VALUES ($1, $2, $3)
-      RETURNING id;`,
-      [user_id, quiz_id, score]
-    )
-    .then((result) => result.rows[0].id);
+  const query = `
+    INSERT INTO attempts (user_id, quiz_id, score)
+    VALUES ($1, $2, $3)
+    RETURNING id;
+  `;
+  const params = [user_id, quiz_id, score];
+  return db.query(query, params)
+    .then(result => result.rows[0].id);
 };
+
 //save the answers
 const saveAnswer = (attemptId, questionId, selectedAnswer) => {
   const query = `
@@ -98,8 +99,15 @@ const getQuizzesByUserId = (userId) => {
 };
 
 
+const updateVisibility = (quizId, visibility) => {
+  const query = `
+    UPDATE quizzes
+    SET visibility = $1
+    WHERE id = $2;
+  `;
+  return db.query(query, [visibility, quizId]);
+};
 
-//true = listed as public quizzes, false = unlisted&private but others can attempt if they have the single quiz link.
 
 
-module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt, insertQuizName ,insertQuestions,updateShareableUrl, getQuizzesByUserId };
+module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt, insertQuizName ,insertQuestions,updateShareableUrl, getQuizzesByUserId, updateVisibility };

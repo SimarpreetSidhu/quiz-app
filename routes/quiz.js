@@ -8,7 +8,8 @@ const {
   saveAttempt,
   insertQuizName,
   insertQuestions,
-  updateShareableUrl
+  updateShareableUrl,
+  updateVisibility
 } = require('../db/queries/quiz');
 
 //route to display all of public quizzes on homepage.
@@ -136,6 +137,18 @@ router.post('/new', (req, res) => {
 
 router.get('/:id', (req, res) => {
   res.render('quiz');
+});
+
+router.post('/:id/visibility', (req, res) => {
+  const quizId = req.params.id;
+  const visibility = req.body.visibility;
+//update/change the visibility in data 
+  updateVisibility(quizId, visibility)
+    .then(() => res.sendStatus(200))
+    .catch(err => {
+      console.error('Failed to change visibility:', err.message);
+      res.status(500).send('Error changing visibility');
+    });
 });
 
 module.exports = router;

@@ -1,5 +1,30 @@
-<body>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <title>My Quizzes</title>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/quizzes.css" />
+  <link rel="stylesheet" href="/styles/user_quizzes.css" />
+
+  <!-- Scripts -->
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/users.js"></script>
+  <script defer src="/scripts/visibility.js"></script>
+
+
+</head>
+
+<body>
   <h1>My Created Quizzes</h1>
 
   <% if (quizzes.length === 0) { %>
@@ -8,31 +33,35 @@
     <ul>
       <% quizzes.forEach(quiz => { %>
         <li>
-          <a href="/quizzes/<%= quiz.id %>/attempt">
-            <%= quiz.quiz_title %>
-          </a>
+          <h3>
+            <a href="/quizzes/<%= quiz.id %>/attempt">
+              <%= quiz.quiz_title %>
+            </a>
+          </h3>
+          <p><%= quiz.quiz_description %></p>
+
           <p>
-            <%= quiz.quiz_description %>
-          </p>
-          <p>Visibility Status: <%= quiz.visibility ? 'Public' : 'Private' %></p>
-          
-          <br>
-          <label><input type="radio" name="visibility" value="public" checked> Public</label>
-          
-          <label><input type="radio" name="visibility" value="private"> Private</label>
+            <strong>Visibility Status:</strong> 
+            <span id="visibility-text-<%= quiz.id %>"><%= quiz.visibility ? 'Public' : 'Private' %></span>
 
-          <br>
-          <p>Share this quiz/question URL:</p>
-          <input type="text" value="<%= `http://localhost:8080/quizzes/${quiz.id}/attempt` %>">
+            <!-- Toggle Button for public/private switch -->
+            <div id="toggle-<%= quiz.id %>"
+              class="toggle-switch <%= quiz.visibility ? 'private' : 'public' %>"
+              data-quiz-id="<%= quiz.id %>"
+              data-is-public="<%= quiz.visibility %>">
+            <div class="slider"></div>
+            </div>
 
+          <p><strong>Share Quiz URL:</strong></p>
+          <input type="text" readonly value="http://localhost:8080/quizzes/<%= quiz.id %>/attempt">
+
+          <hr>
         </li>
-        <hr>
       <% }); %>
     </ul>
   <% } %>
 
-  <script src="/scripts/shareMyResult.js"></script>
-
-
+  <button onclick="window.location.href='/'">Go Home</button>
 
 </body>
+</html>
