@@ -102,17 +102,13 @@ router.get('/new', (req, res) => {
 
 router.post('/new', (req, res) => {
   const numQuestions = ((Object.keys(req.body).length) - 2) / 3;
+  console.log(req.body);
   let quiz_title = req.body.quiz_title;
   let quiz_description = req.body.quiz_description;
-  console.log(req.session);
   let userID = req.session.user_id;
 
-  let visibility = true;
-  if (req.body.visibility === 'false') {
-    visibility = false;
-  }
-
-  insertQuizName(quiz_title, quiz_description, userID)
+  let public = req.body.public;
+  insertQuizName(quiz_title, quiz_description, userID , public)
     .then(result => {
       const newQuizId = result.rows[0].id;
       return updateShareableUrl(newQuizId)

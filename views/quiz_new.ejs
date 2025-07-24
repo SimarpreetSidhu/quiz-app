@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
   <link rel="stylesheet" href="/styles/questionSheet.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/quiz_create.js"></script>
@@ -19,36 +21,41 @@
 </head>
 
 <body>
-  <div class="header">
-    <div class="title">
-      <h1 class="quiz-name">New Quiz</h1>
-      <!--<button class="edit">Edit name</button>-->
-    </div>
-
-  </div>
-  <form class="question-create" method ="post" action="/quizzes/new">
-    <label for="quiz-name">Quiz Name</label>
-    <input type="text" name="quiz_title" id="quiz-name">
-    <div class="description">
-      <textarea name="quiz_description" class="description-text">description</textarea>
-    </div>
-    <div class="question-container">
-      <div class="question" id="1">
-        <textarea name="quiz_question1">Insert Question here</textarea>
-        <input type="radio" id="true" name="answer1" value="true">
-        <label for="true">True</label>
-        <input type="radio" id="false" name="answer1" value="false">
-        <label for="false">False</label>
-        <input type="hidden" name = "question_position_1" value ="1">
-        <button class="remove"> Remove Question</button>
+  <%- include("partials/_header.ejs") %>
+    <div class="header">
+      <div class="title">
+        <h1 class="quiz-name-new">New Quiz</h1>
       </div>
-      <div class="question">
-        <button class="add"> Add new question</button>
+    </div>
+    <form class="question-create" method="post" action="/quizzes/new">
+      <div class="quiz-name">
+        <label for="quiz-name">Quiz Name</label>
+        <textarea name="quiz_title" id="quiz-name"></textarea>
       </div>
+      <div class="description">
+        <textarea name="quiz_description" class="description-text">description</textarea>
+      </div>
+      <div class="question-container">
+        <div class="question" id="1">
+          <textarea name="quiz_question1">Insert Question here</textarea>
+          <input type="radio" id="true" name="answer1" value="true">
+          <label for="true">True</label>
+          <input type="radio" id="false" name="answer1" value="false">
+          <label for="false">False</label>
+          <input type="hidden" name="question_position_1" value="1">
+          <button class="remove"> Remove Question</button>
+        </div>
+        <div class="question">
+          <button class="add"> Add new question</button>
+        </div>
+        <input type="hidden" name="public" value="false">
+        <label class="public" for="public">Available to public</label>
+        <input class="public" type="checkbox" id="public" name="public" value="true">
+        
+        <button type="submit" class="save">Save Quiz</button>
+      </div>
+    </form>
 
-      <button class="save">Save Quiz</button>
-  </form>
-  </div>
 
 </body>
 

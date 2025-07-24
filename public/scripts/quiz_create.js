@@ -11,31 +11,11 @@ const createQuestionElement = (questionData) => {
       <div class="question">`);
 }
 
-
-let num = 2;
-$('.question-container').on('click', '.add', function(e) {
-  e.preventDefault();
-  $('.question:last').before(
-    `<div class="question" id="${num}">
-         <textarea name="quiz_question${num}">Insert Question here</textarea>
-        <input type="radio" id="true" name="answer${num}" value="true">
-        <label for="true">True</label>
-        <input type="radio" id="false" name="answer${num}" value = "false">
-        <label for="false">False</label>
-        <input type="hidden" name = "question_position_${num}" value ="${num}">
-        <button class="remove"> Remove Question</button>
-      </div>`);
-  num++;
-});
-
-$('.question-container').on('click', '.remove', function() {
-  $(this).parent().remove();
-});
-
-$('.question-container').on('click','.save', function(e){
+$('.question-create').on('submit',function(e){
   e.preventDefault();
   var quizName =$('#quiz-name').val();
-  $('.quiz-name').text(quizName);
+  console.log(quizName);
+  $('.quiz-name-new').text(quizName);
   var descriptionText =$('.description-text').val();
   $('.description-text').text(descriptionText);
     //questionGather();
@@ -56,4 +36,29 @@ $('.question-container').on('click','.save', function(e){
       console.log(err);
     }
   })
-})
+});
+
+let num = 2;
+$('.question-container').on('click', '.add', function(e) {
+  e.preventDefault();
+  $('.question:last').before(
+    `<div class="question" id="${num}">
+         <textarea name="quiz_question${num}">Insert Question here</textarea>
+        <input type="radio" id="true" name="answer${num}" value="true">
+        <label for="true">True</label>
+        <input type="radio" id="false" name="answer${num}" value = "false">
+        <label for="false">False</label>
+        <input type="hidden" name = "question_position_${num}" value ="${num}">
+        <button class="remove"> Remove Question</button>
+      </div>`);
+  num++;
+});
+
+
+$('.question-container').on('click', '.remove', function() {
+  $(this).parent().remove();
+});
+
+//$('.question-container').on('click','.save', function(e){
+  
+//})
