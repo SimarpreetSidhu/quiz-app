@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Quiz</title>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/questionSheet.css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/shareQuiz.js"></script>
+
+</head>
+
+<body>
+  <h1>Your Quizzes</h1>
+
+  <% if (quizzes.length===0) { %>
+    <p>No quizzes created yet.</p>
+    <% } else { %>
+      <ul>
+        <% quizzes.forEach(quiz=> { %>
+          <li>
+            <a href="/quizzes/<%= quiz.id %>/attempt">
+              <%= quiz.quiz_title %>
+            </a>
+            <% if (quiz.visibility) { %>(Public)<% } else { %>(Private)<% } %>
+                  <!-- Share button with data-url -->
+                  <% if (quiz.visibility) { %>
+                    <button class="share-button" data-url="/quizzes/<%= quiz.id %>/share">Share</button>
+
+                    <% } %>
+          </li>
+          <% }); %>
+      </ul>
+      <% } %>
+
+        <a href="/quizzes/new">Create another quiz</a>
+</body>
+
+</html>

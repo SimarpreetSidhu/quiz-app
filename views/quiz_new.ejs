@@ -32,39 +32,35 @@
         <label for="quiz-name">Quiz Name</label>
         <textarea name="quiz_title" id="quiz-name"></textarea>
       </div>
+
       <div class="description">
         <textarea name="quiz_description" class="description-text">description</textarea>
       </div>
+
       <div class="question-container">
         <div class="question" id="1">
           <textarea name="quiz_question1">Insert Question here</textarea>
-          <input type="radio" id="true" name="answer1" value="true">
-          <label for="true">True</label>
-          <input type="radio" id="false" name="answer1" value="false">
-          <label for="false">False</label>
+          <input type="radio" id="true1" name="answer1" value="true">
+          <label for="true1">True</label>
+          <input type="radio" id="false1" name="answer1" value="false">
+          <label for="false1">False</label>
           <input type="hidden" name="question_position_1" value="1">
-          <button class="remove"> Remove Question</button>
+          <button class="remove">Remove Question</button>
         </div>
+
         <div class="question">
-          <button class="add"> Add new question</button>
+          <button class="add">Add new question</button>
         </div>
-        <input type="hidden" name="public" value="false">
-        <label class="public" for="public">Available to public</label>
-        <input class="public" type="checkbox" id="public" name="public" value="true">
-        
-        <button type="submit" class="save">Save Quiz</button>
       </div>
-<<<<<<< HEAD
+
+      <label for="public">Available to public</label>
+      <input type="checkbox" id="public" name="public" value="true" />
+
+      <button type="submit" class="save">Save Quiz</button>
     </form>
 
-=======
-      <input type="hidden" name="public" value="false">
-      <input type="checkbox" id="public" name="public" value="true">
-      <label for="public">Available to public</label>
-      <button class="save">Save Quiz</button>
-  </form>
-  </div>
->>>>>>> master
+    </div>
+
 
 </body>
 

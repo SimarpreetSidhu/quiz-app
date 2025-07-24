@@ -9,7 +9,8 @@ const {
   insertQuizName,
   insertQuestions,
   updateShareableUrl,
-  updateVisibility
+  updateVisibility,
+  getQuizzesByUserId
 } = require('../db/queries/quiz');
 
 //route to display all of public quizzes on homepage.
@@ -92,34 +93,47 @@ router.get('/new', (req, res) => {
   res.render('quiz_new');
 });
 
-router.post('/new', (req, res) => {
-  const numQuestions = ((Object.keys(req.body).length) - 2) / 3;
-  console.log(req.body);
-  let quiz_title = req.body.quiz_title;
-  let quiz_description = req.body.quiz_description;
-  let userID = req.session.user_id;
-  let public = req.body.public;
-  insertQuizName(quiz_title, quiz_description, userID, public)
-    .then(result => {
-      const newQuizId = result.rows[0].id;
-      return updateShareableUrl(newQuizId)
-        .then(() => {
-          return newQuizId;
-        });
+router.post('/new', async (req, res) => {
+  try {
+    const userID = req.session.user_id;
 
-    })
-    .then((newQuizId) => {
-      const queryPromises = [];
-      for (let i = 1; i <= numQuestions; i++) {
-        let quiz_question = req.body[`quiz_question${i}`];
-        let quiz_position = req.body[`question_position_${i}`];
-        let quiz_answer = req.body[`answer${i}`];
+    if (!userID) {
+      return res.status(401).json({ error: 'User must be logged in to create quiz.' });
+    }
 
-        queryPromises.push(insertQuestions(newQuizId, quiz_question, quiz_position, quiz_answer));
+    const bodyKeys = Object.keys(req.body);
+    const numQuestions = (bodyKeys.length - 2) / 3;
+    console.log('Request Body:', req.body);
+    console.log('Number of questions:', numQuestions);
+
+    const quiz_title = req.body.quiz_title;
+    const quiz_description = req.body.quiz_description;
+
+    const isPublic = req.body.public === 'true';
+
+    const result = await insertQuizName(quiz_title, quiz_description, userID, isPublic);
+    const newQuizId = result.rows[0].id;
+
+    await updateShareableUrl(newQuizId);
+
+    for (let i = 1; i <= numQuestions; i++) {
+      const quiz_question = req.body[`quiz_question${i}`];
+      const quiz_position = req.body[`question_position_${i}`];
+      const quiz_answer = req.body[`answer${i}`];
+
+      if (!quiz_question || !quiz_answer) {
+        console.log(`Skipping question ${i} due to missing data.`);
+        continue;
       }
-      return Promise.all(queryPromises);
-    });
 
+      await insertQuestions(newQuizId, quiz_question, quiz_position, quiz_answer);
+    }
+
+    res.status(200).json({ quizId: newQuizId });
+  } catch (err) {
+    console.error('Error in /quizzes/new:', err);
+    res.status(500).json({ error: 'Failed to create quiz' });
+  }
 });
 
 router.get('/:id', (req, res) => {
@@ -137,5 +151,22 @@ router.post('/:id/visibility', (req, res) => {
       res.status(500).send('Error changing visibility');
     });
 });
+
+router.get('/:id/share', async (req, res) => {
+  const quizId = req.params.id;
+
+  try {
+    const quiz = await getQuizById(quizId);
+    if (!quiz) {
+      return res.status(404).send('Quiz not found');
+    }
+
+    res.render('quizzes_list', { quizzes: [quiz] });
+  } catch (err) {
+    console.error('Error fetching quiz for sharing:', err);
+    res.status(500).send('Something went wrong.');
+  }
+});
+
 
 module.exports = router;

@@ -26,28 +26,22 @@
     </div>
 
   </div>
-  <form class="question-create" method = "POST" action = "">
+  <form class="question-create" method="POST" action="/quizzes/new">
     <label for="quiz-name">Quiz Name</label>
-    <input type="text" name="quiz-name" id="quiz-name">
-    <div class="description">
-      <textarea class="description-text">description</textarea>
-    </div>
-    <div class="question-container">
-      <!--<div class="question" id="0">
-        <textarea name=>Insert Question here</textarea>
-        <input type="radio" id="true" name="answer0">
-        <label for="true">True</label>
-        <input type="radio" id="false" name="answer0">
-        <label for="false">False</label>
-        <button class="remove"> Remove Question</button>
-      </div>
-      <div class="question"> -->
-        <button class="add"> Add new question</button>
-      </div>
+    <input type="text" name="quiz_title" id="quiz-name" required>
 
-      <button class="save">Save Quiz</button>
-      <button class="share">Share</button>
+    <div class="description">
+      <textarea class="description-text" name="quiz_description" required>description</textarea>
+    </div>
+
+    <div class="question-container">
+      <!-- Questions will be dynamically added here -->
+      <button class="add" type="button">Add new question</button>
+    </div>
+
+    <button type="submit" class="save">Save Quiz</button>
   </form>
+
   </div>
 
 </body>
