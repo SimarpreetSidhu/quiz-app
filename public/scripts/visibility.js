@@ -1,3 +1,4 @@
+
 const updateVisibility = (quizId, isPrivate) => {
   $.ajax({
     url: `/quizzes/${quizId}/visibility`,

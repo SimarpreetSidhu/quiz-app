@@ -106,7 +106,6 @@ router.post('/new', (req, res) => {
   let quiz_title = req.body.quiz_title;
   let quiz_description = req.body.quiz_description;
   let userID = req.session.user_id;
-
   let public = req.body.public;
   insertQuizName(quiz_title, quiz_description, userID , public)
     .then(result => {
