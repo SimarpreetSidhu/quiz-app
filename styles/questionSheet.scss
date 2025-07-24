@@ -2,15 +2,29 @@ body{
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
+  width: 100%;
+  background: lightblue;
+}
+textarea{
+  resize:none;
 }
 .header{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: auto;
 }
+.description-text{
+  margin: 10px;
+}
+.question-create{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .title{
   display: flex;
   flex-direction: row;
@@ -19,14 +33,16 @@ body{
 }
 .save{
   display:flex;
-  
+  margin: 10px;
   align-items: flex-end;
 }
 
 .title h1 {
   padding-right: 10px;
 }
-
+.public {
+  padding:10px;
+}
 .question{
-  border: 1px solid red;
+  padding:10px;
 }
