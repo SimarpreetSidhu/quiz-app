@@ -12,7 +12,6 @@
   font-family: "Source Sans 3", sans-serif;
 }
 
-
 .navbar-nav-left {
   display: flex;
   gap: 2rem;
@@ -21,6 +20,7 @@
   font-family: 'Bungee Shade', sans-serif;
   font-size: 40px;
 
+  //all of titles(elements) <a>
   a {
     color: #333;
     text-decoration: none;
