@@ -8,6 +8,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Google Fonts: Bungee Shade + Source Sans 3 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
@@ -25,43 +30,50 @@
 </head>
 
 <body>
-  <h1>My Created Quizzes</h1>
+  <!-- Header -->
+  <header class="page-header">
+    <h1>My Created Quizzes</h1>
+  </header>
 
+  <!-- Main Content (Quiz list)-->
   <% if (quizzes.length === 0) { %>
     <p>You haven't created any quizzes yet.</p>
   <% } else { %>
-    <ul>
+    <ul class="quiz-list-container">
       <% quizzes.forEach(quiz => { %>
-        <li>
+        <li class="quiz-list">
           <h3>
             <a href="/quizzes/<%= quiz.id %>/attempt">
               <%= quiz.quiz_title %>
             </a>
           </h3>
           <p><%= quiz.quiz_description %></p>
-
-          <p>
-            <strong>Visibility Status:</strong> 
-            <span id="visibility-text-<%= quiz.id %>"><%= quiz.visibility ? 'Public' : 'Private' %></span>
-
-            <!-- Toggle Button for public/private switch -->
+    
+          <div class="visibility-box">
+            <p>
+              <strong>Visibility Status:</strong> 
+              <span id="visibility-text-<%= quiz.id %>"><%= quiz.visibility ? 'Public' : 'Private' %></span>
+            </p>
             <div id="toggle-<%= quiz.id %>"
               class="toggle-switch <%= quiz.visibility ? 'private' : 'public' %>"
               data-quiz-id="<%= quiz.id %>"
               data-is-public="<%= quiz.visibility %>">
-            <div class="slider"></div>
+              <div class="slider"></div>
             </div>
-
+          </div>
+    
           <p><strong>Share Quiz URL:</strong></p>
           <input type="text" readonly value="http://localhost:8080/quizzes/<%= quiz.id %>/attempt">
-
-          <hr>
         </li>
       <% }); %>
     </ul>
   <% } %>
 
+  <!-- Footer -->
+  <footer class="page-footer">
+    <!-- Button to go back to home -->
   <button onclick="window.location.href='/'">Go Home</button>
+  </footer>
 
 </body>
 </html>

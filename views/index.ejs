@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
   <link rel="stylesheet" href="/styles/nav.css" />
+  <link rel="stylesheet" href="/styles/user_quizzes.css" />
 
   <!-- JavaScript -->
   <script src="/vendor/jquery-3.0.0.js"></script>
@@ -27,10 +28,17 @@
 </head>
 
 <body>
+
   <%- include("partials/_header.ejs") %>
   <main>
-    <h1>Welcome to the Quiz App!</h1>
-    <h1>Public Quizzes</h1>
+    <h1 class="homepage-title">Welcome to the Quiz App!</h1>
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHR2ZWZwdnY3YWIyMzA5cmo3Mjk2MWdxNnY5Z2NyOXB3b3Ryd2RqdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ASd0Ukj0y3qMM/giphy.gif" 
+    alt="Quiz Animation" 
+    class="homepage-gif" 
+    />
+    <p class="homepage-description">
+      Create, share, and take quizzes on any topic. Whether you're a student, teacher, or just curious, our quiz app makes learning fun and interactive!
+    </p>
     <ul>
       <% quizzes.forEach(quiz=> { %>
         <li>
