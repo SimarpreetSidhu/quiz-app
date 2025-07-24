@@ -4,5 +4,32 @@ body main {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: blanchedalmond;
+  background: #b4cccf;
+}
+
+.homepage-title {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 3rem;
+  color: #333;
+  text-align: center;
+  margin-top: 10rem;
+  text-shadow: 2px 2px #ccc;
+}
+
+.homepage-gif {
+  display: block;
+  max-width: 300px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.homepage-description {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
