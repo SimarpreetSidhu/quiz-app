@@ -16,32 +16,43 @@
 
   <!-- Scripts -->
   <script src="/vendor/jquery-3.0.0.js"></script>
-  <script src="/public/scripts/shareMyResult.js"></script>
+  <script src="/scripts/shareMyResult.js"></script>
 
 </head>
 
 <body>
-<h1>Quiz Results</h1>
-<p>Your Score: <%= score %> out of <%= total %></p>
+  <h1>Quiz Results</h1>
+  <p>Your Score: <%= score %> out of <%= total %>
+  </p>
 
-<% if (questions) { %>
-  <ul>
-    <% questions.forEach(q => { %>
-      <li>
-        <strong>Q:</strong> <%= q.content %><br>
-        <strong>Your Answer:</strong> <%= userAnswers[`question-${q.id}`] %> <br>
-        <strong>Correct Answer:</strong> <%= q.correct_answer %><br>
-      </li>
-      <hr>
-    <% }) %>
-  </ul>
-<% } %>
+  <% if (questions) { %>
+    <ul>
+      <% questions.forEach(q=> { %>
+        <li>
+          <strong>Q:</strong>
+          <%= q.content %><br>
+            <strong>Your Answer:</strong>
+            <%= userAnswers[`question-${q.id}`] %> <br>
+              <strong>Correct Answer:</strong>
+              <%= q.correct_answer %><br>
+        </li>
+        <hr>
+        <% }) %>
+    </ul>
+    <% } %>
 
-<!-- Buttons for navigation-->
-<button onclick="window.location.href='/'">Go Home</button>
-<button onclick="window.location.href='/quizzes/<%= quizId %>/attempt'">Try Again</button>
+      <!-- Buttons for navigation-->
+      <button onclick="window.location.href='/'">Go Home</button>
+      <button onclick="window.location.href='/quizzes/<%= quizId %>/attempt'">Try Again</button>
 
-<!-- I created shareMyResult.js (script) file for shareMyResult function -->
-<button onclick="shareMyResult()">Share my result with a friend</button>
+      <!-- Share button -->
+      <% if (!isSharedView) { %>
+        <button id="share-button" data-url="/results/<%= sharableUrl %>">Share with friends</button>
+        <% } %>
+
+
+
+
+
 
 </body>
