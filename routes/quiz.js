@@ -53,47 +53,39 @@ router.post('/:id/submit', async (req, res) => {
   const userId = req.session.user_id;
   let score = 0;
 
-  getQuestionsByQuizId(quizId)
-    //when fetching the questions are done, loop through each question and check if each question matches the correct_answer. 
-    // if it matches, then add 1point.
-    .then(questions => {
-      // Calculate the score
-      questions.forEach(question => {
-        const userAnswer = userAnswers[`question-${question.id}`];
-        if (userAnswer === String(question.correct_answer)) {
-          score++;
-        }
-      });
+  try {
+    const questions = await getQuestionsByQuizId(quizId);
 
-      // Save attempt and answers
-      return saveAttempt(userId, quizId, score).then(attemptId => {
-        // Save answers one by one (map to promises)
-        const saveAnswersPromises = questions.map(question => {
-          const selected = userAnswers[`question-${question.id}`];
-          return saveAnswer(attemptId, question.id, selected);
-        });
-
-        // Wait for all answers saved
-        return Promise.all(saveAnswersPromises).then(() => {
-          return { questions, attemptId };
-        });
-      });
-    })
-
-    .then(({ questions }) => {
-      // Render the result page
-      res.render('result', {
-        score,
-        total: questions.length,
-        questions,
-        userAnswers,
-        quizId
-      });
-    })
-    .catch(err => {
-      console.error('Error submitting quiz:', err);
-      res.status(500).send('Something went wrong.');
+    questions.forEach(question => {
+      const userAnswer = userAnswers[`question-${question.id}`];
+      if (userAnswer === String(question.correct_answer)) {
+        score++;
+      }
     });
+
+    const { id: attemptId, sharable_url } = await saveAttempt(userId, quizId, score);
+    const sharableUrl = sharable_url;
+
+    const saveAnswersPromises = questions.map(question => {
+      const selected = userAnswers[`question-${question.id}`];
+      return saveAnswer(attemptId, question.id, selected);
+    });
+
+    await Promise.all(saveAnswersPromises);
+
+    res.render('result', {
+      score,
+      total: questions.length,
+      questions,
+      userAnswers,
+      quizId,
+      sharableUrl,
+      isSharedView: false
+    });
+  } catch (err) {
+    console.error('Error submitting quiz:', err);
+    res.status(500).send('Something went wrong.');
+  }
 });
 
 router.get('/new', (req, res) => {
@@ -107,14 +99,14 @@ router.post('/new', (req, res) => {
   let quiz_description = req.body.quiz_description;
   let userID = req.session.user_id;
   let public = req.body.public;
-  insertQuizName(quiz_title, quiz_description, userID , public)
+  insertQuizName(quiz_title, quiz_description, userID, public)
     .then(result => {
       const newQuizId = result.rows[0].id;
       return updateShareableUrl(newQuizId)
-      .then(()=>{
-      return newQuizId;
-      });
-    
+        .then(() => {
+          return newQuizId;
+        });
+
     })
     .then((newQuizId) => {
       const queryPromises = [];
@@ -137,7 +129,7 @@ router.get('/:id', (req, res) => {
 router.post('/:id/visibility', (req, res) => {
   const quizId = req.params.id;
   const visibility = req.body.visibility;
-//update/change the visibility in data 
+  //update/change the visibility in data 
   updateVisibility(quizId, visibility)
     .then(() => res.sendStatus(200))
     .catch(err => {

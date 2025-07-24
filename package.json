@@ -23,7 +23,8 @@
     "express": "^4.21.2",
     "morgan": "^1.10.0",
     "pg": "^8.13.1",
-    "sass": "^1.83.1"
+    "sass": "^1.83.1",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

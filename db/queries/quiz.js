@@ -1,5 +1,6 @@
 //const { useId } = require('react');
 const db = require('../connection');
+const { v4: uuidv4 } = require('uuid'); 
 
 const insertQuizName = (quizTitle, quizDescription, userId, visibility) => {
 
@@ -67,15 +68,45 @@ const getQuizById = (quizId) => {
 };
 
 //save the attempt
-const saveAttempt = (user_id, quiz_id, score) => {
+// const saveAttempt = (user_id, quiz_id, score) => {
+//   const query = `
+//     INSERT INTO attempts (user_id, quiz_id, score)
+//     VALUES ($1, $2, $3)
+//     RETURNING id;
+//   `;
+//   const params = [user_id, quiz_id, score];
+//   return db.query(query, params)
+//     .then(result => result.rows[0].id);
+// };
+const saveAttempt = async (userId, quizId, score) => {
+  const sharableUrl = uuidv4();
+  const result = await db.query(`
+    INSERT INTO attempts (user_id, quiz_id, score, sharable_url)
+    VALUES ($1, $2, $3, $4)
+    RETURNING id, sharable_url;
+  `, [userId, quizId, score, sharableUrl]);
+
+  return result.rows[0]; // { id: ..., sharable_url: ... }
+};
+
+// share the results
+
+const shareResults = async (sharableUrl) => {
   const query = `
-    INSERT INTO attempts (user_id, quiz_id, score)
-    VALUES ($1, $2, $3)
-    RETURNING id;
+    SELECT attempts.*, quizzes.quiz_title, users.name AS user_name
+    FROM attempts
+    JOIN quizzes ON quizzes.id = attempts.quiz_id
+    JOIN users ON users.id = attempts.user_id
+    WHERE attempts.sharable_url = $1
   `;
-  const params = [user_id, quiz_id, score];
-  return db.query(query, params)
-    .then(result => result.rows[0].id);
+
+  const result = await db.query(query, [sharableUrl]);
+
+  if (result.rows.length === 0) {
+    throw new Error('No result found for that shareable link.');
+  }
+
+  return result.rows[0];
 };
 
 //save the answers
@@ -108,6 +139,31 @@ const updateVisibility = (quizId, visibility) => {
   return db.query(query, [visibility, quizId]);
 };
 
+const getAttemptBySharableUrl = (sharableUrl) => {
+  const query = `
+    SELECT attempts.*, quizzes.quiz_title
+    FROM attempts
+    JOIN quizzes ON quizzes.id = attempts.quiz_id
+    WHERE attempts.sharable_url = $1
+  `;
+
+  return db.query(query, [sharableUrl]).then(result => result.rows[0] || null);
+};
+
+const getAnswersByAttemptId = (attemptId) => {
+  const query = `
+    SELECT question_id, selected_answer
+    FROM answers
+    WHERE attempt_id = $1;
+  `;
+  return db.query(query, [attemptId])
+    .then(result => result.rows)
+    .catch(err => {
+      console.error('Query Failed!: ', err.message);
+      return [];
+    });
+};
 
 
-module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt, insertQuizName ,insertQuestions,updateShareableUrl, getQuizzesByUserId, updateVisibility };
+
+module.exports = { getPublicQuizzes, getQuestionsByQuizId, getQuizById, saveAnswer, saveAttempt, insertQuizName ,insertQuestions,updateShareableUrl, getQuizzesByUserId, updateVisibility , getAttemptBySharableUrl, getAnswersByAttemptId};
