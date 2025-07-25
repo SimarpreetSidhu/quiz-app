@@ -161,7 +161,8 @@ router.get('/:id/share', async (req, res) => {
       return res.status(404).send('Quiz not found');
     }
 
-    res.render('quizzes_list', { quizzes: [quiz] });
+    //res.render('quizzes_list', { quizzes: [quiz] });
+    res.render('user_quizzes', { quizzes: [quiz] });
   } catch (err) {
     console.error('Error fetching quiz for sharing:', err);
     res.status(500).send('Something went wrong.');

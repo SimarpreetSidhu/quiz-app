@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="/styles/layout.css" />
   <link rel="stylesheet" href="/styles/nav.css" />
   <link rel="stylesheet" href="/styles/user_quizzes.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
 
   <!-- JavaScript -->
   <script src="/vendor/jquery-3.0.0.js"></script>
@@ -39,7 +40,7 @@
     <p class="homepage-description">
       Create, share, and take quizzes on any topic. Whether you're a student, teacher, or just curious, our quiz app makes learning fun and interactive!
     </p>
-    <ul>
+    <ul class="homepage-quiz-list">
       <% quizzes.forEach(quiz=> { %>
         <li>
           <a href="/quizzes/<%= quiz.id %>/attempt">

@@ -3,7 +3,7 @@ body{
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
-  background: lightblue;
+  background: #b4cccf;;
 }
 textarea{
   resize:none;
@@ -14,6 +14,7 @@ textarea{
   justify-content: center;
   align-items: center;
   width: auto;
+  padding-top: 150px;
 }
 .description-text{
   margin: 10px;

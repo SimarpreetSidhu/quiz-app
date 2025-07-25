@@ -7,6 +7,14 @@ body main {
   background: #b4cccf;
 }
 
+.homepage-quiz-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 90vw;
+  padding: 30px 150px 70px 150px
+}
+
+
 .homepage-title {
   font-family: 'Source Sans 3', sans-serif;
   font-size: 3rem;
